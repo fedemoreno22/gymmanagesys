@@ -16,11 +16,25 @@
 					<form method="post" action="">
 						{% csrf_token %}
 						<table class="table table-bordered">
-							{{form.as_table}}
+							<div class="mb-3">
+								<label for="username">Username:</label>
+								<input type="text" name="username" id="username" required="required" class="form-control" placeholder="Write your username">
+						   </div>
+			
+						   <div class="mb-3">
+								<label for="password1">Password:</label>
+								<input type="password" name="password1" id="password1" required="required" class="form-control" placeholder="Write your username">
+							</div>
+			
+							<div class="mb-3">
+								<label for="password2">Confirm your Password:</label>
+								<input type="password" name="password2" id="password2" required="required" class="form-control" placeholder="Write your username">
+						   </div>
 							<tr>
-								<td colspan="2">
-									<input type="submit" class="btn btn-primary" />
-								</td>
+								<button class="btn btn-primary">
+									Signup
+								</button>
+
 							</tr>
 						</table>
 					</form>

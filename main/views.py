@@ -64,14 +64,28 @@ def pricing(request):
 
 # SignUp
 def signup(request):
-	msg=None
-	if request.method=='POST':
-		form=forms.SignUp(request.POST)
-		if form.is_valid():
-			form.save()
-			msg='Thank you for register.'
-	form=forms.SignUp
-	return render(request, 'registration/signup.html',{'form':form,'msg':msg})
+	if request.method =='GET':
+		return render(request, 'registration/signup.html', {
+		'form': UserCreationForm
+		})
+	else:
+		if request.POST['password1'] == request.POST['password2']:
+			try:
+				user = User.objects.create_user(username=request.POST['username'], 
+				password=request.POST['password1'])
+				user.save()
+				login(request, user)
+				return redirect('home')
+			except IntegrityError:
+				return render(request, 'registration/signup.html', {
+					'form': UserCreationForm,
+					"error": 'Username already exists'
+				})
+		
+	return render(request, 'registration/signup.html', {
+			'form': UserCreationForm,
+			"error": 'Password do not match'
+	})
 
 # ChangePassword
 def password_change(request):
